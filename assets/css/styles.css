@@ -1,0 +1,90 @@
+body {
+  background: linear-gradient(135deg, #cceeff 0%, #99ddff 100%);
+}
+
+/* Botón login */
+.custom-login-btn {
+  background-color: pink;
+  color: black;
+  font-weight: bold;
+  border: none;
+}
+.custom-login-btn:hover {
+  background-color: #ff99cc; /* tono más fuerte al pasar el mouse */
+  color: black;
+}
+
+/* Botones rosados con letra negra */
+.custom-btn {
+  background-color: pink;
+  color: black;
+  font-weight: bold;
+  border: none;
+}
+.custom-btn:hover {
+  background-color: #ff99cc;
+  color: black;
+}
+
+/* Fondo amarillo para el saldo */
+.saldo-destacado {
+  background-color: yellow;
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: transform 0.3s ease, background-color 0.5s ease;
+}
+
+/* Animación de pulso */
+@keyframes pulse {
+  0% { transform: scale(1); background-color: yellow; }
+  50% { transform: scale(1.1); background-color: #fff176; }
+  100% { transform: scale(1); background-color: yellow; }
+}
+.saldo-destacado.animate {
+  animation: pulse 1s ease;
+}
+
+/* Campo rosado */
+.campo {
+  font-weight: bold;          /* Negrita */
+  color: black;               /* Texto negro */
+  background-color: #ff69b4;  /* Fondo rosado */
+  padding: 8px;
+  border-radius: 6px;
+  margin: 10px 0;
+  text-align: left;
+}
+
+/* Título login */
+.titulo-login {
+  color: #ff69b4;   /* Rosado */
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Letras rosadas en la barra de navegación */
+.nav-pink {
+  color: pink !important;
+  font-weight: bold;
+  position: relative;
+  transition: color 0.3s ease;
+}
+.nav-pink:hover {
+  color: #ff99cc !important;
+}
+.nav-pink::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: pink;
+  transition: width 0.3s ease;
+}
+.nav-pink:hover::after {
+  width: 100%;
+}
