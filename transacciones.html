@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Transacciones | Alke Wallet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <!-- Tu CSS global con el rosado correcto -->
+  <link rel="stylesheet" href="assets/css/styles.css">
+
+  <style>
+    body {
+      background-color: #b3e5fc; /* fondo celeste */
+    }
+
+    /* Animación para el saldo */
+    .saldo-destacado {
+      background-color: yellow;
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-weight: bold;
+      transition: transform 0.3s ease, background-color 0.5s ease;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); background-color: yellow; }
+      50% { transform: scale(1.1); background-color: #fff176; }
+      100% { transform: scale(1); background-color: yellow; }
+    }
+    .saldo-destacado.animate { animation: pulse 1s ease; }
+
+    /* Animación para la lista de transacciones */
+    .list-group-item {
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.6s forwards;
+    }
+    @keyframes fadeInUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Colores según tipo de transacción (rosado y negro) */
+    /* Usa la clase global text-brand-pink si la tienes en tu styles.css.
+       Si no, crea allí: .text-brand-pink { color: /* tu rosado exacto */ } */
+    .deposito { font-weight: bold; }
+    .envio { color: #000000; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+  <div class="container py-4">
+    <h2 class="text-center mb-4"><i class="bi bi-receipt me-2"></i> Historial de Transacciones</h2>
+
+    <!-- Saldo dinámico -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-body text-center">
+        <h5 class="card-title">Saldo disponible</h5>
+        <p id="saldoDisponible" class="fs-4 saldo-destacado">Saldo disponible: $0</p>
+      </div>
+    </div>
+
+    <!-- Lista de transacciones -->
+    <div class="card shadow-sm mb-4">
+      <div class="card-body">
+        <h5 class="card-title">Transacciones realizadas</h5>
+        <ul id="transactionsList" class="list-group list-group-flush">
+          <!-- Se llenará dinámicamente -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- Botón volver al menú principal (usa el mismo rosado de tus otros botones) -->
+    <div class="text-center mt-3">
+      <a href="menu.html" class="btn custom-btn w-100">
+        <i class="bi bi-arrow-left-circle me-2"></i> Volver al menú principal
+      </a>
+    </div>
+  </div>
+
+  <!-- Script para actualizar saldo y transacciones -->
+  <script>
+    (() => {
+      let saldoInicial = 153000;
+      let transactions = JSON.parse(localStorage.getItem('transactions')) || [];
+
+      let saldoActual = saldoInicial;
+      transactions.forEach(t => {
+        if (t.tipo === "Depósito") {
+          saldoActual += parseFloat(t.monto);
+        } else {
+          saldoActual -= parseFloat(t.monto);
+        }
+      });
+
+      const saldo = document.getElementById('saldoDisponible');
+      saldo.textContent = `Saldo disponible: $${saldoActual.toLocaleString()}`;
+      saldo.classList.add("animate");
+      setTimeout(() => saldo.classList.remove("animate"), 1000);
+
+      const list = document.getElementById('transactionsList');
+      if (transactions.length === 0) {
+        list.innerHTML = "<li class='list-group-item text-muted'>No hay transacciones registradas</li>";
+      } else {
+        transactions.forEach((t, index) => {
+          const li = document.createElement('li');
+          li.className = "list-group-item";
+          li.style.animationDelay = `${index * 0.1}s`;
+
+          const texto = `${t.fecha} ${t.hora} - ${t.tipo || "Envío"}: ${t.destinatario || ""} - $${t.monto} (${t.descripcion})`;
+
+          if (t.tipo === "Depósito") {
+            // Aplica la clase de texto rosado global para que coincida 100% con tus botones
+            li.innerHTML = `<span class="deposito text-brand-pink">${texto}</span>`;
+          } else {
+            li.innerHTML = `<span class="envio">${texto}</span>`;
+          }
+
+          list.appendChild(li);
+        });
+      }
+    })();
+  </script>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
