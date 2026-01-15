@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Login - Alke Wallet</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="login-container">
+    <!-- Texto en rosado -->
+    <h2 class="titulo-login">Iniciar Sesión</h2>
+
+    <p class="campo">Correo electrónico</p>
+    <input type="email" id="email" placeholder="Escribe tu correo" required>
+
+    <p class="campo">Clave</p>
+    <input type="password" id="password" placeholder="Escribe tu clave" required>
+
+    <button id="btnIngresar">Ingresar</button>
+  </div>
+
+  <script>
+    document.getElementById("btnIngresar").addEventListener("click", function() {
+      window.location.href = "menu.html";
+    });
+  </script>
+</body>
+</html>
+</html>
